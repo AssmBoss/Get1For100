@@ -1,35 +1,32 @@
 public class Main {
     public static void main(String[] args) {
-        // переменные для входных данных и параметров программы:
-        int account = 100; //сумма у клиента на счете (изначально по условию 100 руб.)
-        int payment = 1100; // сумма платежа для пополнения счета
-        int premiumPaymentRate = 1000; // уровень платежа, выше которого начисляются бонусы
-        int bonusStep = 100; // размер части платежа, за который начисляется 1 руб. бонуса (по условию 100 руб.)
-        int bonuses = 0; // размер начисленных бонусов, изначально 0
 
-        if (payment <= 0) // проверка, что сумма платежа для пополнения счета не 0 и не отриц.число
-        {
+        int account = 100;
+        int payment = 1100;
+        int premiumPaymentRate = 1000;
+        int bonusStep = 100;
+        int bonuses = 0;
+        boolean isOk = true;
+
+        if (payment <= 0) {
             System.out.println("Ошибка: введена неверная сумма платежа");
-            System.exit(0); // Terminates JVM
+            isOk = false;
         }
-        if (premiumPaymentRate < 0) // проверка, что размер платежа, выше которого начисляются бонусы, не отриц.число
-        {
+        if (premiumPaymentRate < 0) {
             System.out.println("Ошибка: введен отрицательный уровень платежа, выше которого начисляются бонусы");
-            System.exit(0); // Terminates JVM
+            isOk = false;
         }
-        if (bonusStep <= 0) //проверка, что размер части платежа, за который начисляется 1 руб. бонуса, не 0 и не отрицательное число
-        {
+        if (bonusStep <= 0) {
             System.out.println("Ошибка: введен отрицательный или нулевой размер части платежа, за который начисляется 1 руб. бонуса");
-            System.exit(0); // Terminates JVM
+            isOk = false;
         }
-
-        if (payment - premiumPaymentRate > 0) // проверка, что сумма платежа выше уровня, за который даются бонусы
-        {
-            bonuses = payment / bonusStep; // расчет бонусов
+        if (isOk) {
+            if (payment - premiumPaymentRate > 0) {
+                bonuses = payment / bonusStep;
+            }
+            account = account + payment + bonuses;
+            System.out.println("На Вашем счету после пополнения: " + account + " руб.");
+            System.out.println("Из них бонусных: " + bonuses + " руб.");
         }
-        account = account + payment + bonuses; // результат пополнения счета на величину платежа с учетом бонусов
-
-        System.out.println("На Вашем счету после пополнения: " + account+" руб."); // вывод на экран счета
-        System.out.println("Из них бонусных: " + bonuses+" руб."); // вывод на экран бонусов
     }
 }
